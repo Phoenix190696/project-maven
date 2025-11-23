@@ -88,7 +88,7 @@
                 </executions>
             </plugin>
 
-            <!-- Compile -->
+            <!-- Usual compilation -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -138,7 +138,7 @@
                 </configuration>
             </plugin>
 
-            <!-- run JavaFX -->
+            <!-- Run java-fx app over Maven -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
