@@ -64,29 +64,6 @@
 
 
         <plugins>
-            <!-- Install -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-install-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <id>install-desktop-game-engine</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>install-file</goal>
-                        </goals>
-                        <configuration>
-                            <file>${project.basedir}/lib/desktop-game-engine.jar</file>
-                            <groupId>com.javarush</groupId>
-                            <artifactId>desktop-game-engine</artifactId>
-                            <version>1.0</version>
-                            <packaging>jar</packaging>
-                            <localRepositoryPath>${project.basedir}/lib</localRepositoryPath>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
 
             <!-- Usual compilation -->
             <plugin>
