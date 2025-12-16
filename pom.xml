@@ -2,39 +2,57 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!-- Версия модели POM -->
     <modelVersion>4.0.0</modelVersion>
+
+    <!-- Идентификаторы проекта -->
     <groupId>jru.module3</groupId>
     <artifactId>project-maven</artifactId>
     <version>1.0</version>
+
     <properties>
+        <!-- Указываем версию Java для компиляции -->
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.target>18</maven.compiler.target>
+        <!-- Кодировка исходников -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- Версия JavaFX -->
         <javafx.version>18.0.1</javafx.version>
     </properties>
+
     <repositories>
+        <!-- Локальный репозиторий для подключения JAR из папки lib -->
         <repository>
             <id>locallib</id>
             <name>local lib</name>
             <url>file:${project.basedir}/lib</url>
         </repository>
     </repositories>
+
     <dependencies>
+        <!-- Apache Commons Lang: утилиты для работы со строками и др. -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.12.0</version>
         </dependency>
+
+        <!-- JavaFX Controls: элементы управления UI -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>18.0.1</version>
         </dependency>
+
+        <!-- Локальная библиотека Javarush Desktop Game Engine -->
         <dependency>
             <groupId>com.javarush</groupId>
             <artifactId>desktop-game-engine</artifactId>
             <version>1.0</version>
         </dependency>
+
+        <!-- JUnit Jupiter Engine: для тестов -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
@@ -42,14 +60,18 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
     <build>
         <resources>
+            <!-- Подключаем JAR-зависимости из target/lib -->
             <resource>
                 <directory>${project.build.directory}/lib</directory>
                 <targetPath>lib</targetPath>
             </resource>
         </resources>
+
         <plugins>
+            <!-- Устанавливаем локальный JAR desktop-game-engine в локальный Maven-репозиторий -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-install-plugin</artifactId>
@@ -62,6 +84,7 @@
                             <goal>install-file</goal>
                         </goals>
                         <configuration>
+                            <!-- Путь до локального JAR -->
                             <file>lib/com/javarush/desktop-game-engine/1.0/desktop-game-engine-1.0.jar</file>
                             <groupId>com.javarush</groupId>
                             <artifactId>desktop-game-engine</artifactId>
@@ -71,6 +94,8 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Компиляция исходников -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -79,14 +104,14 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+
+            <!-- Копирование зависимостей в target/lib -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>3.6.1</version>
                 <configuration>
-                    <outputDirectory>
-                        ${project.build.directory}/lib
-                    </outputDirectory>
+                    <outputDirectory>${project.build.directory}/lib</outputDirectory>
                     <includeScope>compile</includeScope>
                 </configuration>
                 <executions>
@@ -98,6 +123,8 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Формирование JAR с манифестом -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -105,17 +132,23 @@
                 <configuration>
                     <archive>
                         <manifest>
+                            <!-- Добавляем classpath в манифест -->
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
+                            <!-- Основной класс-загрузчик -->
                             <mainClass>org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader</mainClass>
                         </manifest>
                         <manifestEntries>
+                            <!-- Класс, который реально запускается -->
                             <Rsrc-Main-Class>com.javarush.games.racer.RacerGame</Rsrc-Main-Class>
+                            <!-- Дополнительный путь -->
                             <Class-Path>./</Class-Path>
                         </manifestEntries>
                     </archive>
                 </configuration>
             </plugin>
+
+            <!-- Плагин для запуска JavaFX-приложения через mvn javafx:run -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
@@ -124,6 +157,8 @@
                     <mainClass>com.javarush.games.racer.RacerGame</mainClass>
                 </configuration>
             </plugin>
+
+            <!-- Исключаем StrangeTest -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -137,3 +172,4 @@
         </plugins>
     </build>
 </project>
+
