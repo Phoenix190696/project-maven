@@ -43,9 +43,6 @@
             <resource>
                 <directory>${project.build.directory}/lib</directory>
                 <targetPath>lib</targetPath>
-                <includes>
-                    <include>*.jar</include>
-                </includes>
             </resource>
         </resources>
         <plugins>
